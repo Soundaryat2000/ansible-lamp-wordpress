@@ -1,0 +1,35 @@
+---
+  - name: install mysql package
+    package:
+      name: mysql-server
+      state: present
+    when: ansible_os_family == "Debian"
+  - name: start the mysql service
+    service:
+      name: mysql
+      state: started
+      enabled: true
+    when: ansible_os_family == "Debian"
+  - name: set the mysql root password
+    mysql_user:
+      login_user: root
+      login_password: "{{mysql_root_password}}"
+      name: root
+      password: "{{mysql_root_password}}"
+      host_all: true
+      check_implicit_admin: true
+    ignore_errors: true
+  - name: create a database
+    mysql_db:
+      login_user: root
+      login_password: "{{mysql_root_password}}"
+      name: "{{wp_db_name}}"
+      state: present
+  - name: create WP user
+    mysql_user:
+      login_user: root
+      login_password: "{{mysql_root_password}}"
+      name: "{{wp_db_user}}"
+      password: "{{wp_db_password}}"
+      state: present 
+      priv: "{{wp_db_name}}.*:ALL"

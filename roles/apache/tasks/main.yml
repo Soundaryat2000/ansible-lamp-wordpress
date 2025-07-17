@@ -1,0 +1,18 @@
+---
+  - name: set fact for redhat
+    set_fact: 
+      package_name: httpd
+    when: ansible_os_family == "RedHat"
+  - name: set fact for Debian
+    set_fact:
+      package_name: apache2
+    when: ansible_os_family == "Debian"
+  - name: install package
+    package:
+      name: "{{package_name}}"
+      state: present
+  - name: start service
+    service: 
+      name: "{{package_name}}"
+      state: started
+      enabled: true

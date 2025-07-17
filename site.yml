@@ -1,0 +1,11 @@
+---
+  - name: LAMP stack and Wordpress (common +apache+mysql+php+wordpress)
+    hosts: ubuntu1
+    become: true
+
+    roles:
+      - common
+      - apache
+      - mysql
+      - php
+      - wp

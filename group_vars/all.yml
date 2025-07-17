@@ -1,0 +1,5 @@
+---
+mysql_root_password: root@123
+wp_db_name: Word_press_name
+wp_db_user: word_press_user
+wp_db_password: WP@123
